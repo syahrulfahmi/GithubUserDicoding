@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Github User Dicoding</string>
+    <string name="detail_personal">Personal</string>
+    <string name="detail_user_statistic">User Statistic</string>
+    <string name="detail_user_following">Following</string>
+    <string name="detail_user_follower">Follower</string>
+    <string name="detail_user_repository">Repository</string>
+    <string name="splash_app_name">Github User By Dicoding</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Masukan username</string>
+</resources>
