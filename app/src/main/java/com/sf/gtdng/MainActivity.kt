@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import com.sf.gtdng.adapter.GithubUserAdapter
 import com.sf.gtdng.adapter.GithubUserResultAdapter
 import com.sf.gtdng.model.GithubUserModel
+import com.sf.gtdng.utils.hideKeyboard
 import com.sf.gtdng.utils.inputStreamToString
 import com.sf.gtdng.viewModel.GithubUserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,7 +46,9 @@ class MainActivity : AppCompatActivity() {
         val searcView = menu.findItem(R.id.search).actionView as SearchView
 
         searcView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
         searcView.queryHint = resources.getString(R.string.search_hint)
+        searcView.setQuery("asd",false)
         searcView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // call on every text change
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -61,6 +64,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 rvGithubUserResult.visibility = View.GONE
                 textInfo.visibility = View.GONE
+                hideKeyboard(this@MainActivity,searcView)
                 if (query.equals("")) {
                     viewModel.param = query
                     rvGithubUser.visibility = View.VISIBLE
@@ -102,11 +106,11 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.getData().observe(this, Observer {
                 progressLoading.visibility = View.GONE
-                if (it.items.isNotEmpty()) {
-                    githubUserResultAdapter.removeAll()
+                if (it.isNotEmpty()) {
                     rvGithubUser.visibility = View.GONE
                     rvGithubUserResult.visibility = View.VISIBLE
-                    githubUserResultAdapter.addAll(it.items)
+                    githubUserResultAdapter.removeAll()
+                    githubUserResultAdapter.addAll(it)
                 } else {
                     textInfo.visibility = View.VISIBLE
                 }

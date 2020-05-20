@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:paddingHorizontal="@dimen/paddingL"
-        android:text="Keyword yang anda cari tidak ditemukan"
+        android:text="@string/main_search_not_found"
         android:textColor="@color/colorBlack"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

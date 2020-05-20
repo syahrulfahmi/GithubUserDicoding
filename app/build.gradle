@@ -19,13 +19,16 @@ android {
     buildTypes {
         debug {
             buildConfigField 'boolean', 'LOG_ENABLE', 'Boolean.parseBoolean(\"true\")'
+            buildConfigField 'String', 'BASE_URL', '\"https://api.github.com/\"'
             buildConfigField 'String', 'AUTH', '\"token 79b97138346fd957f486c5ff962ec323e9286078\"'
         }
         release {
             minifyEnabled false
 
             buildConfigField 'boolean', 'LOG_ENABLE', 'Boolean.parseBoolean(\"false\")'
+            buildConfigField 'String', 'BASE_URL', '\""https://api.github.com/"\"'
             buildConfigField 'String', 'AUTH', '\"token 79b97138346fd957f486c5ff962ec323e9286078\"'
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
