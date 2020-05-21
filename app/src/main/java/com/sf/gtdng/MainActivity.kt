@@ -2,6 +2,8 @@ package com.sf.gtdng
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -14,8 +16,10 @@ import com.google.gson.Gson
 import com.sf.gtdng.adapter.GithubUserAdapter
 import com.sf.gtdng.adapter.GithubUserResultAdapter
 import com.sf.gtdng.model.GithubUserModel
+import com.sf.gtdng.utils.Extra
 import com.sf.gtdng.utils.hideKeyboard
 import com.sf.gtdng.utils.inputStreamToString
+import com.sf.gtdng.utils.showAlert
 import com.sf.gtdng.viewModel.GithubUserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,12 +35,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        githubUserAdapter = GithubUserAdapter(this)
-        githubUserResultAdapter = GithubUserResultAdapter(this)
-        rvGithubUserResult.adapter = githubUserResultAdapter
 
         initObserver()
         initRecyclerView()
+        initListener()
+//        if (isConnectivityEnabled()) {
+//            showAlert(this)
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -48,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         searcView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
         searcView.queryHint = resources.getString(R.string.search_hint)
-        searcView.setQuery("asd",false)
+        searcView.setQuery(viewModel.param, false)
         searcView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // call on every text change
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 rvGithubUserResult.visibility = View.GONE
                 textInfo.visibility = View.GONE
-                hideKeyboard(this@MainActivity,searcView)
+                hideKeyboard(this@MainActivity, searcView)
                 if (query.equals("")) {
                     viewModel.param = query
                     rvGithubUser.visibility = View.VISIBLE
@@ -83,14 +88,21 @@ class MainActivity : AppCompatActivity() {
                 if (viewModel.param.isNullOrEmpty()) {
                     rvGithubUser.visibility = View.VISIBLE
                     rvGithubUserResult.visibility = View.GONE
+                    textInfo.visibility = View.GONE
                 } else {
-                    rvGithubUser.visibility = View.GONE
+                    if (githubUserResultAdapter.items.isEmpty()) {
+                        rvGithubUser.visibility = View.VISIBLE
+                    }
                     rvGithubUserResult.visibility = View.VISIBLE
+                    textInfo.visibility = View.GONE
                 }
                 isChange = true
                 return true
             }
+
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                searcView.onActionViewExpanded()
+                searcView.setQuery(viewModel.param, false)
                 isChange = false
                 return true
             }
@@ -100,28 +112,49 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel = ViewModelProvider(this,ViewModelProvider
-            .NewInstanceFactory())
+        viewModel = ViewModelProvider(
+            this, ViewModelProvider
+                .NewInstanceFactory()
+        )
             .get(GithubUserViewModel::class.java)
 
-            viewModel.getData().observe(this, Observer {
-                progressLoading.visibility = View.GONE
-                if (it.isNotEmpty()) {
-                    rvGithubUser.visibility = View.GONE
-                    rvGithubUserResult.visibility = View.VISIBLE
-                    githubUserResultAdapter.removeAll()
-                    githubUserResultAdapter.addAll(it)
-                } else {
-                    textInfo.visibility = View.VISIBLE
-                }
-            })
+        viewModel.getData().observe(this, Observer {
+            progressLoading.visibility = View.GONE
+            if (it.isNotEmpty()) {
+                rvGithubUser.visibility = View.GONE
+                rvGithubUserResult.visibility = View.VISIBLE
+                githubUserResultAdapter.removeAll()
+                githubUserResultAdapter.addAll(it)
+            } else {
+                textInfo.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun initRecyclerView() {
+        githubUserAdapter = GithubUserAdapter(this)
+        githubUserResultAdapter = GithubUserResultAdapter(this)
+        rvGithubUser.adapter = githubUserAdapter
+        rvGithubUserResult.adapter = githubUserResultAdapter
+
         val myJson = inputStreamToString(resources.openRawResource(R.raw.github_user))
         Gson().fromJson(myJson, GithubUserModel::class.java).let {
             githubUserAdapter.addAll(it.users)
         }
-        rvGithubUser.adapter = githubUserAdapter
+    }
+
+    private fun initListener() {
+        githubUserResultAdapter.onItemClickListener = { item, _ ->
+            val intent = Intent(this, DetailUserResultActivity::class.java).apply {
+                putExtra(Extra.DATA, item)
+            }
+            startActivity(intent)
+        }
+    }
+
+    fun isConnectivityEnabled(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        return activeNetwork?.isConnectedOrConnecting == true
     }
 }

@@ -22,6 +22,7 @@ class GithubUserResultAdapter(var context: Context) :
     RecyclerView.Adapter<GithubUserResultAdapter.ItemViewHolder>() {
 
     var items = ArrayList<ItemUserGithub>()
+    var onItemClickListener: (data: ItemUserGithub, position: Int) -> Unit = { _, _ -> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater
@@ -60,19 +61,7 @@ class GithubUserResultAdapter(var context: Context) :
             itemView.textUser.text = item.login
 
             itemView.cvGithubItemUser.setOnClickListener {
-                val intent = Intent(activity, DetailActivity::class.java).apply {
-                    putExtra(Extra.DATA, item)
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        activity,
-                        itemView.imageUser,
-                        Extra.IMAGE
-                    )
-                    activity.startActivity(intent, options.toBundle())
-                } else {
-                    activity.startActivity(intent)
-                }
+                onItemClickListener(item, adapterPosition)
             }
         }
     }
