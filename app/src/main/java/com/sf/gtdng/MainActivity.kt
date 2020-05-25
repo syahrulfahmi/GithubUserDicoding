@@ -35,13 +35,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         initObserver()
         initRecyclerView()
         initListener()
-//        if (isConnectivityEnabled()) {
-//            showAlert(this)
-//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,37 +47,39 @@ class MainActivity : AppCompatActivity() {
         val searcView = menu.findItem(R.id.search).actionView as SearchView
 
         searcView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-
-        searcView.queryHint = resources.getString(R.string.search_hint)
-        searcView.setQuery(viewModel.param, false)
-        searcView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            // call on every text change
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (!isChange) {
-                    if (newText.equals("")) {
-                        this.onQueryTextSubmit("")
+        searcView.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            queryHint = resources.getString(R.string.search_hint)
+            setQuery(viewModel.param, false)
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                // call on every text change
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (!isChange) {
+                        if (newText.equals("")) {
+                            this.onQueryTextSubmit("")
+                        }
                     }
+                    return true
                 }
-                return true
-            }
 
-            // call if only press the submit button
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                rvGithubUserResult.visibility = View.GONE
-                textInfo.visibility = View.GONE
-                hideKeyboard(this@MainActivity, searcView)
-                if (query.equals("")) {
-                    viewModel.param = query
-                    rvGithubUser.visibility = View.VISIBLE
-                } else {
-                    rvGithubUser.visibility = View.GONE
-                    viewModel.param = query
-                    viewModel.getData()
-                    progressLoading.visibility = View.VISIBLE
+                // call if only press the submit button
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    rvGithubUserResult.visibility = View.GONE
+                    textInfo.visibility = View.GONE
+                    hideKeyboard(this@MainActivity, searcView)
+                    if (query.equals("")) {
+                        viewModel.param = query
+                        rvGithubUser.visibility = View.VISIBLE
+                    } else {
+                        rvGithubUser.visibility = View.GONE
+                        viewModel.param = query
+                        viewModel.getData()
+                        progressLoading.visibility = View.VISIBLE
+                    }
+                    return true
                 }
-                return true
-            }
-        })
+            })
+        }
 
         searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {

@@ -5,8 +5,8 @@
     <color name="colorPrimaryTransparent">#10CB202D</color>
     <color name="colorAccent">#CB202D</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTransparentWhite">#30555555</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBlue">#0099ff</color>
     <color name="colorGreyLight4">#CCCCCC</color>
-
 </resources>

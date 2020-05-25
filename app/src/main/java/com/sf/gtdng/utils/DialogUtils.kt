@@ -17,7 +17,7 @@ fun showAlert(context: Context) {
         .setCancelable(false)
         .setPositiveButton(
             "Ya"
-        ) { _, id -> // jika tombol diklik, maka akan menutup activity ini
+        ) { _, _ -> // jika tombol diklik, maka akan menutup activity ini
 
         }
         .setNegativeButton(
