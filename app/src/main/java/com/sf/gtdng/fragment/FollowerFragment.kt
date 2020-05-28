@@ -29,7 +29,6 @@ class FollowerFragment : Fragment() {
                 activity!!,
                 ViewModelProvider.NewInstanceFactory()
             ).get(GithubUserViewModel::class.java)
-            viewModel.userName = "ASD"
         }
     }
 
@@ -41,9 +40,17 @@ class FollowerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         followerListAdapter = FollowerListAdapter(context!!)
-        viewModel.getUserDetail().observe(viewLifecycleOwner, Observer {
+        viewModel.getUserFollower().observe(viewLifecycleOwner, Observer {
             rvFollowerList.adapter = followerListAdapter
             followerListAdapter.addAll(it)
+            progressLoading.visibility = View.GONE
+            if (followerListAdapter.items.isEmpty()) {
+                rvFollowerList.visibility = View.GONE
+                textInfo.visibility = View.VISIBLE
+            } else {
+                rvFollowerList.visibility = View.VISIBLE
+                textInfo.visibility = View.GONE
+            }
         })
     }
 }

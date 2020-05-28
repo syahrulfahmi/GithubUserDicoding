@@ -60,16 +60,16 @@ class GithubUserAdapter(var context: Context) :
                 val intent = Intent(activity, DetailActivity::class.java).apply {
                     putExtra(Extra.DATA, item)
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        activity,
-                        itemView.imageUser,
-                        Extra.IMAGE
-                    )
-                    activity.startActivity(intent, options.toBundle())
-                } else {
-                    activity.startActivity(intent)
-                }
+                activity.startActivity(intent)
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                        activity,
+//                        itemView.imageUser,
+//                        Extra.IMAGE
+//                    )
+//                    activity.startActivity(intent, options.toBundle())
+//                } else {
+//                }
             }
         }
     }

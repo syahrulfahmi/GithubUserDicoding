@@ -9,5 +9,6 @@
     <string name="splash_app_name">Github User By Dicoding</string>
     <string name="search">Search</string>
     <string name="search_hint">Masukan username</string>
+    <string name="detail_user_empty_follower_following">Belum ada %s untuk user ini</string>
 
 </resources>

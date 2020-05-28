@@ -5,33 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/collapsing_toolbar"
+    tools:context=".MainActivity"
     tools:showPaths="true">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/toolbar_image"
+    <ImageView
+        android:id="@+id/imageHeader"
         android:layout_width="0dp"
         android:layout_height="300dp"
+        android:adjustViewBounds="true"
         android:background="@color/colorPrimary"
+        android:contentDescription="@null"
         android:fitsSystemWindows="true"
         android:scaleType="center"
         android:src="@drawable/ic_adsbisnis"
-        android:tint="@color/colorTransparentWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btnBackButton"
+    <ImageView
+        android:id="@android:id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/actionBarItemBackground"
-        android:padding="@dimen/paddingM"
-        android:src="@drawable/ic_arrow_back_white"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:src="@drawable/abc_ic_ab_back_material"
         android:tint="?android:attr/textColorPrimaryInverse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,16 +45,17 @@
         android:textColor="?android:attr/textColorPrimaryInverse"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+        app:layout_constraintBottom_toBottomOf="@id/imageHeader"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
         android:minHeight="?actionBarSize"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_image"
+        app:layout_constraintTop_toBottomOf="@id/imageHeader"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorHeight="4dp"
@@ -61,7 +66,8 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabs" />
+        app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -1,6 +1,6 @@
 package com.sf.gtdng.network.datasource
 
-import com.sf.gtdng.network.response.FollowerListResponse
+import com.sf.gtdng.network.response.FollowingAndFollowerListResponse
 import com.sf.gtdng.network.response.GithubUserResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -19,5 +19,11 @@ interface ApiEndPoint {
     fun getUserFollower(
         @Header("Authorization") authorization: String,
         @Path("username") username: String?
-    ): Call<FollowerListResponse>
+    ): Call<FollowingAndFollowerListResponse>
+
+    @GET("users/{username}/following")
+    fun getUserFollowing(
+        @Header("Authorization") authorization: String,
+        @Path("username") username: String?
+    ): Call<FollowingAndFollowerListResponse>
 }

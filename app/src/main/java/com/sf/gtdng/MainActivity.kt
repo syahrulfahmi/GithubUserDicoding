@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var githubUserAdapter: GithubUserAdapter
     private lateinit var githubUserResultAdapter: GithubUserResultAdapter
     private lateinit var viewModel: GithubUserViewModel
+    private lateinit var searchView: SearchView
 
     private var isChange = false
 
@@ -44,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.option_menu, menu)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchMenuItem = menu.findItem(R.id.search)
-        val searcView = menu.findItem(R.id.search).actionView as SearchView
+        searchView = menu.findItem(R.id.search).actionView as SearchView
 
-        searcView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searcView.apply {
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             queryHint = resources.getString(R.string.search_hint)
             setQuery(viewModel.param, false)
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     rvGithubUserResult.visibility = View.GONE
                     textInfo.visibility = View.GONE
-                    hideKeyboard(this@MainActivity, searcView)
+                    hideKeyboard(this@MainActivity, searchView)
                     if (query.equals("")) {
                         viewModel.param = query
                         rvGithubUser.visibility = View.VISIBLE
@@ -99,8 +100,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                searcView.onActionViewExpanded()
-                searcView.setQuery(viewModel.param, false)
+                searchView.onActionViewExpanded()
+                searchView.setQuery(viewModel.param, false)
                 isChange = false
                 return true
             }

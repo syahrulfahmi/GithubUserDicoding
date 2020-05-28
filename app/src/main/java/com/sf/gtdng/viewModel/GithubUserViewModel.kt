@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.sf.gtdng.network.Api
 import com.sf.gtdng.network.ApiService
 import com.sf.gtdng.network.datasource.ApiEndPoint
-import com.sf.gtdng.network.response.FollowerListModelItem
-import com.sf.gtdng.network.response.FollowerListResponse
+import com.sf.gtdng.network.response.FollowingAndFollowerListItem
+import com.sf.gtdng.network.response.FollowingAndFollowerListResponse
 import com.sf.gtdng.network.response.GithubUserResponse
 import com.sf.gtdng.network.response.ItemUserGithub
 import com.sf.gtdng.utils.log
@@ -19,7 +19,8 @@ import retrofit2.Retrofit
 class GithubUserViewModel : ViewModel() {
     private val data = MutableLiveData<GithubUserResponse>()
     private var listItem = MutableLiveData<ArrayList<ItemUserGithub>>()
-    private var followerListItem  = MutableLiveData<ArrayList<FollowerListModelItem>>()
+    private var followerListItem = MutableLiveData<ArrayList<FollowingAndFollowerListItem>>()
+    private var followingListItem = MutableLiveData<ArrayList<FollowingAndFollowerListItem>>()
     var param: String? = null
     var userName: String? = null
 
@@ -28,7 +29,10 @@ class GithubUserViewModel : ViewModel() {
         val apiEndpoint = retrofit.create(ApiEndPoint::class.java)
         val call: Call<GithubUserResponse> = apiEndpoint.getUserList(Api.AUTH, param)
         call.enqueue(object : Callback<GithubUserResponse?> {
-            override fun onResponse(call: Call<GithubUserResponse?>?,response: Response<GithubUserResponse?>) {
+            override fun onResponse(
+                call: Call<GithubUserResponse?>?,
+                response: Response<GithubUserResponse?>
+            ) {
                 if (response.isSuccessful) {
                     data.postValue(response.body())
                     val listData = ArrayList<ItemUserGithub>()
@@ -46,14 +50,17 @@ class GithubUserViewModel : ViewModel() {
         return listItem
     }
 
-    fun getUserDetail(): LiveData<ArrayList<FollowerListModelItem>> {
+    fun getUserFollower(): LiveData<ArrayList<FollowingAndFollowerListItem>> {
         val retrofit: Retrofit = ApiService.getRetrofitService()
         val apiEndpoint = retrofit.create(ApiEndPoint::class.java)
-        val call: Call<FollowerListResponse> = apiEndpoint.getUserFollower(Api.AUTH, userName)
-        call.enqueue(object : Callback<FollowerListResponse?> {
-            override fun onResponse(call: Call<FollowerListResponse?>?,response: Response<FollowerListResponse?>) {
+        val call: Call<FollowingAndFollowerListResponse> = apiEndpoint.getUserFollower(Api.AUTH, userName)
+        call.enqueue(object : Callback<FollowingAndFollowerListResponse?> {
+            override fun onResponse(
+                call: Call<FollowingAndFollowerListResponse?>?,
+                response: Response<FollowingAndFollowerListResponse?>
+            ) {
                 if (response.isSuccessful) {
-                    val listData = ArrayList<FollowerListModelItem>()
+                    val listData = ArrayList<FollowingAndFollowerListItem>()
                     for (i in response.body()!!) {
                         listData.add(i)
                     }
@@ -61,10 +68,35 @@ class GithubUserViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<FollowerListResponse?>, t: Throwable) {
+            override fun onFailure(call: Call<FollowingAndFollowerListResponse?>, t: Throwable) {
                 log("ASD", t?.message)
             }
         })
         return followerListItem
+    }
+
+    fun getUserFollowing(): LiveData<ArrayList<FollowingAndFollowerListItem>> {
+        val retrofit: Retrofit = ApiService.getRetrofitService()
+        val apiEndpoint = retrofit.create(ApiEndPoint::class.java)
+        val call: Call<FollowingAndFollowerListResponse> = apiEndpoint.getUserFollowing(Api.AUTH, userName)
+        call.enqueue(object : Callback<FollowingAndFollowerListResponse?> {
+            override fun onResponse(
+                call: Call<FollowingAndFollowerListResponse?>?,
+                response: Response<FollowingAndFollowerListResponse?>
+            ) {
+                if (response.isSuccessful) {
+                    val listData = ArrayList<FollowingAndFollowerListItem>()
+                    for (i in response.body()!!) {
+                        listData.add(i)
+                    }
+                    followingListItem.postValue(listData)
+                }
+            }
+
+            override fun onFailure(call: Call<FollowingAndFollowerListResponse?>, t: Throwable) {
+                log("ASD", t?.message)
+            }
+        })
+        return followingListItem
     }
 }

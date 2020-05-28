@@ -5,7 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.sf.gtdng.R
+import com.sf.gtdng.adapter.FollowerListAdapter
+import com.sf.gtdng.viewModel.GithubUserViewModel
+import kotlinx.android.synthetic.main.fragment_list_following.*
 
 /**
  * بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
@@ -14,7 +19,39 @@ import com.sf.gtdng.R
 
 class FollowingFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_list_follower, null)
+    private lateinit var followerListAdapter: FollowerListAdapter
+    private lateinit var viewModel: GithubUserViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity.run {
+            viewModel = ViewModelProvider(
+                activity!!,
+                ViewModelProvider.NewInstanceFactory()
+            ).get(GithubUserViewModel::class.java)
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return LayoutInflater.from(context).inflate(R.layout.fragment_list_following, null)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        textInfo.text = String.format(getString(R.string.detail_user_empty_follower_following), "Pengikut")
+        followerListAdapter = FollowerListAdapter(context!!)
+        viewModel.getUserFollowing().observe(viewLifecycleOwner, Observer {
+            rvFollowingList.adapter = followerListAdapter
+            followerListAdapter.addAll(it)
+            progressLoading.visibility = View.GONE
+            if (followerListAdapter.items.isEmpty()) {
+                textInfo.visibility = View.VISIBLE
+                rvFollowingList.visibility = View.GONE
+            } else {
+                rvFollowingList.visibility = View.VISIBLE
+                textInfo.visibility = View.GONE
+            }
+        })
     }
 }
