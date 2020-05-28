@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/collapsing_toolbar"
-    tools:context=".MainActivity"
-    tools:showPaths="true">
+    app:layoutDescription="@xml/collapsing_toolbar">
 
     <ImageView
         android:id="@+id/imageHeader"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:adjustViewBounds="true"
         android:background="@color/colorPrimary"
         android:contentDescription="@null"
@@ -22,28 +20,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@android:id/home"
+    <View
+        android:id="@+id/viewOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#70000000"
+        app:layout_constraintBottom_toBottomOf="@id/imageHeader"
+        app:layout_constraintLeft_toLeftOf="@id/imageHeader"
+        app:layout_constraintRight_toRightOf="@id/imageHeader"
+        app:layout_constraintTop_toTopOf="@id/imageHeader" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorTransparent"
+        android:clickable="true"
+        android:focusable="true"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="16dp"
-        android:src="@drawable/abc_ic_ab_back_material"
-        android:tint="?android:attr/textColorPrimaryInverse"
+        android:src="@drawable/ic_arrow_back_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/title"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageUser"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/marginM"
+        android:layout_marginBottom="@dimen/marginM"
+        app:layout_constraintBottom_toTopOf="@id/textFullName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:src="@drawable/user1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textFullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="@dimen/marginS"
+        android:layout_marginBottom="@dimen/marginL"
+        android:fontFamily="@font/gotham_medium"
         android:text="@string/app_name"
-        android:textColor="?android:attr/textColorPrimaryInverse"
-        android:textSize="32sp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fontXXXL"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/imageHeader"
         app:layout_constraintStart_toStartOf="parent" />

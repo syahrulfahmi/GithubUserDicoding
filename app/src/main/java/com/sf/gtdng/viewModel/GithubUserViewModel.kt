@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.sf.gtdng.network.Api
 import com.sf.gtdng.network.ApiService
 import com.sf.gtdng.network.datasource.ApiEndPoint
-import com.sf.gtdng.network.response.FollowingAndFollowerListItem
-import com.sf.gtdng.network.response.FollowingAndFollowerListResponse
-import com.sf.gtdng.network.response.GithubUserResponse
-import com.sf.gtdng.network.response.ItemUserGithub
+import com.sf.gtdng.network.response.*
 import com.sf.gtdng.utils.log
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +14,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class GithubUserViewModel : ViewModel() {
-    private val data = MutableLiveData<GithubUserResponse>()
+    private val githubUserSearchResponse = MutableLiveData<GithubUserResponse>()
+    private val githubUserDetailResponse = MutableLiveData<GithubUserDetailResponse>()
     private var listItem = MutableLiveData<ArrayList<ItemUserGithub>>()
     private var followerListItem = MutableLiveData<ArrayList<FollowingAndFollowerListItem>>()
     private var followingListItem = MutableLiveData<ArrayList<FollowingAndFollowerListItem>>()
@@ -34,7 +32,7 @@ class GithubUserViewModel : ViewModel() {
                 response: Response<GithubUserResponse?>
             ) {
                 if (response.isSuccessful) {
-                    data.postValue(response.body())
+                    githubUserSearchResponse.postValue(response.body())
                     val listData = ArrayList<ItemUserGithub>()
                     for (i in response.body()!!.items) {
                         listData.add(i)
@@ -48,6 +46,27 @@ class GithubUserViewModel : ViewModel() {
             }
         })
         return listItem
+    }
+
+    fun getUserDetail(): LiveData<GithubUserDetailResponse> {
+        val retrofit: Retrofit = ApiService.getRetrofitService()
+        val apiEndpoint = retrofit.create(ApiEndPoint::class.java)
+        val call: Call<GithubUserDetailResponse> = apiEndpoint.getUserDetail(Api.AUTH, userName)
+        call.enqueue(object : Callback<GithubUserDetailResponse?> {
+            override fun onResponse(
+                call: Call<GithubUserDetailResponse?>,
+                response: Response<GithubUserDetailResponse?>
+            ) {
+                if (response.isSuccessful) {
+                    githubUserDetailResponse.postValue(response.body())
+                }
+            }
+
+            override fun onFailure(call: Call<GithubUserDetailResponse?>, t: Throwable) {
+                log("ASD", t.message)
+            }
+        })
+        return githubUserDetailResponse
     }
 
     fun getUserFollower(): LiveData<ArrayList<FollowingAndFollowerListItem>> {
@@ -69,7 +88,7 @@ class GithubUserViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<FollowingAndFollowerListResponse?>, t: Throwable) {
-                log("ASD", t?.message)
+                log("ASD", t.message)
             }
         })
         return followerListItem

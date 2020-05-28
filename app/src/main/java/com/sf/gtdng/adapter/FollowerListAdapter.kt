@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.sf.gtdng.DetailUserResultActivity
 import com.sf.gtdng.R
 import com.sf.gtdng.network.response.FollowingAndFollowerListItem
+import com.sf.gtdng.utils.loadUrl
 import kotlinx.android.synthetic.main.item_github_user.view.*
 
 /**
@@ -48,9 +49,8 @@ class FollowerListAdapter(var context: Context) :
 
         fun bind(position: Int) {
             item = items[position]
-            val activity = (context as DetailUserResultActivity)
 
-            Glide.with(activity).load(item.avatarUrl).into(itemView.imageUser)
+            itemView.imageUser.loadUrl(item.avatarUrl)
             itemView.textUser.text = item.login
         }
     }

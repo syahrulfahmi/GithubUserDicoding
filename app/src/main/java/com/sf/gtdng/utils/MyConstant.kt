@@ -10,5 +10,4 @@ object AppLog {
 
 object Extra {
     const val DATA = "extra_data"
-    const val IMAGE = "image"
 }

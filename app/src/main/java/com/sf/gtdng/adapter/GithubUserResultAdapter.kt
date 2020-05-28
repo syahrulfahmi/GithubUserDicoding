@@ -15,6 +15,7 @@ import com.sf.gtdng.R
 import com.sf.gtdng.model.User
 import com.sf.gtdng.network.response.ItemUserGithub
 import com.sf.gtdng.utils.Extra
+import com.sf.gtdng.utils.loadUrl
 import kotlinx.android.synthetic.main.item_github_user.view.*
 
 
@@ -55,9 +56,8 @@ class GithubUserResultAdapter(var context: Context) :
 
         fun bind(position: Int) {
             item = items[position]
-            val activity = (context as MainActivity)
 
-            Glide.with(activity).load(item.avatarUrl).into(itemView.imageUser)
+            itemView.imageUser.loadUrl(item.avatarUrl)
             itemView.textUser.text = item.login
 
             itemView.cvGithubItemUser.setOnClickListener {
