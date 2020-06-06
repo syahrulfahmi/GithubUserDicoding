@@ -21,6 +21,7 @@ class GithubUserViewModel : ViewModel() {
     private var followingListItem = MutableLiveData<ArrayList<FollowingAndFollowerListItem>>()
     var param: String? = null
     var userName: String? = null
+    var isFailure = MutableLiveData<Boolean>()
 
     fun getData(): LiveData<ArrayList<ItemUserGithub>> {
         val retrofit: Retrofit = ApiService.getRetrofitService()
@@ -42,7 +43,7 @@ class GithubUserViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<GithubUserResponse?>?, t: Throwable?) {
-                log("ASD", t?.message)
+                isFailure.postValue(true)
             }
         })
         return listItem
@@ -113,7 +114,7 @@ class GithubUserViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<FollowingAndFollowerListResponse?>, t: Throwable) {
-                log("ASD", t?.message)
+                log("ASD", t.message)
             }
         })
         return followingListItem

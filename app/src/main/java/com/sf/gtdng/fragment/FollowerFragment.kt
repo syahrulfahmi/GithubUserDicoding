@@ -1,5 +1,6 @@
 package com.sf.gtdng.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.sf.gtdng.DetailUserActivity
 import com.sf.gtdng.R
 import com.sf.gtdng.adapter.FollowerListAdapter
+import com.sf.gtdng.utils.Extra
 import com.sf.gtdng.viewModel.GithubUserViewModel
 import kotlinx.android.synthetic.main.fragment_list_follower.*
+import kotlinx.android.synthetic.main.fragment_list_follower.progressLoading
+import kotlinx.android.synthetic.main.fragment_list_follower.textInfo
 
 /**
  * بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
@@ -32,14 +37,18 @@ class FollowerFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return LayoutInflater.from(context).inflate(R.layout.fragment_list_follower, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         followerListAdapter = FollowerListAdapter(context!!)
+
         viewModel.getUserFollower().observe(viewLifecycleOwner, Observer {
             rvFollowerList.adapter = followerListAdapter
             followerListAdapter.addAll(it)
@@ -52,5 +61,15 @@ class FollowerFragment : Fragment() {
                 textInfo.visibility = View.GONE
             }
         })
+        initListener()
+    }
+
+    private fun initListener() {
+        followerListAdapter.onItemClickedListener = { item, _ ->
+            val intent = Intent(activity!!, DetailUserActivity::class.java).apply {
+                putExtra(Extra.DATA, item.login)
+            }
+            startActivity(intent)
+        }
     }
 }

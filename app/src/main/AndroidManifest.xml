@@ -24,10 +24,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DetailUserResultActivity"
+            android:name=".DetailUserActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

@@ -15,7 +15,7 @@ data class GithubUserDetailResponse(
     @SerializedName("blog")
     val blog: String,
     @SerializedName("company")
-    val company: String,
+    val company: String?,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("email")
@@ -41,11 +41,11 @@ data class GithubUserDetailResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("location")
-    val location: String,
+    val location: String?,
     @SerializedName("login")
-    val login: String,
+    val login: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("node_id")
     val nodeId: String,
     @SerializedName("organizations_url")

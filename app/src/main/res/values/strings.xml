@@ -3,12 +3,16 @@
     <string name="main_search_not_found">Keyword yang anda cari tidak ditemukan</string>
     <string name="detail_personal">Personal</string>
     <string name="detail_user_statistic">User Statistic</string>
-    <string name="detail_user_following">Following</string>
-    <string name="detail_user_follower">Follower</string>
-    <string name="detail_user_repository">Repository</string>
+    <string name="detail_user_following">Mengikuti</string>
+    <string name="detail_user_follower">Pengikut</string>
+    <string name="detail_user_repository">Repositori</string>
+    <string name="detail_user_company_not_found">Tidak ada perusahaan</string>
     <string name="splash_app_name">Github User By Dicoding</string>
     <string name="search">Search</string>
     <string name="search_hint">Masukan username</string>
-    <string name="detail_user_empty_follower_following">Belum ada %s untuk user ini</string>
+    <string name="detail_user_empty_follower">User belum memiliki Pengikut</string>
+    <string name="detail_user_empty_following">User belum pernah Mengikuti</string>
 
+    <string name="alert_no_network">Kamu tidak terhubung dengan Internet. Coba periksa kembali koneksimu</string>
+    <string name="try_again">Coba Lagi</string>
 </resources>

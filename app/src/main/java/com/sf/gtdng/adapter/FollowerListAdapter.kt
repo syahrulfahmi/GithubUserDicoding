@@ -5,28 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.sf.gtdng.DetailUserResultActivity
 import com.sf.gtdng.R
 import com.sf.gtdng.network.response.FollowingAndFollowerListItem
 import com.sf.gtdng.utils.loadUrl
-import kotlinx.android.synthetic.main.item_github_user.view.*
+import kotlinx.android.synthetic.main.item_github_user_search.view.*
 
 /**
  * بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
  * Created By Fahmi on 25/05/20
  */
 
-
 class FollowerListAdapter(var context: Context) :
     RecyclerView.Adapter<FollowerListAdapter.ItemViewHolder>() {
 
     var items = ArrayList<FollowingAndFollowerListItem>()
+    var onItemClickedListener: (item: FollowingAndFollowerListItem, position: Int) -> Unit = { _, _ -> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.item_github_user, parent, false)
+            .inflate(R.layout.item_github_user_search, parent, false)
         return ItemViewHolder(view)
     }
 
@@ -52,6 +50,9 @@ class FollowerListAdapter(var context: Context) :
 
             itemView.imageUser.loadUrl(item.avatarUrl)
             itemView.textUser.text = item.login
+            itemView.setOnClickListener {
+                onItemClickedListener(item, adapterPosition)
+            }
         }
     }
 }

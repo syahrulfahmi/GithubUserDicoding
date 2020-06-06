@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/marginM">
+    android:layout_marginTop="@dimen/marginSM">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvGithubItemUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/marginS"
-        android:background="?attr/selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
         android:elevation="5dp"
+        android:focusable="true"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintLeft_toLeftOf="parent"
