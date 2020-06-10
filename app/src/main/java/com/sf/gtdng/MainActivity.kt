@@ -1,6 +1,7 @@
 package com.sf.gtdng
 
 import android.app.SearchManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,30 +16,50 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.sf.gtdng.adapter.GithubUserAdapter
 import com.sf.gtdng.adapter.GithubUserResultAdapter
+import com.sf.gtdng.db.DatabaseContract
+import com.sf.gtdng.db.GithubUserFavoriteHelper
 import com.sf.gtdng.fragment.DialogNoConnection
+import com.sf.gtdng.helper.*
 import com.sf.gtdng.model.GithubUserModel
 import com.sf.gtdng.network.NetworkChecking
-import com.sf.gtdng.utils.Extra
-import com.sf.gtdng.utils.hideKeyboard
-import com.sf.gtdng.utils.inputStreamToString
 import com.sf.gtdng.viewModel.GithubUserViewModel
+import kotlinx.android.synthetic.main.activity_favorite.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var githubUserAdapter: GithubUserAdapter
     private lateinit var githubUserResultAdapter: GithubUserResultAdapter
     private lateinit var viewModel: GithubUserViewModel
+    private lateinit var githubUserFavoriteHelper: GithubUserFavoriteHelper
 
     private var isChange = false
+    private var isLoad = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        githubUserFavoriteHelper = GithubUserFavoriteHelper.getInstance(this)
+        githubUserFavoriteHelper.open()
+
+        loadData()
         initObserver()
         initRecyclerView()
         initListener()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        if (item.itemId == R.id.favorite) {
+            val intent = Intent(this@MainActivity, FavoriteActivity::class.java)
+            startActivity(intent)
+        }
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -70,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                     if (!NetworkChecking.isNetworkAvailable(this@MainActivity)) {
                         val dialog = DialogNoConnection()
                         dialog.onButtonClickListener = {
-                            if(NetworkChecking.isNetworkAvailable(this@MainActivity)) {
+                            if (NetworkChecking.isNetworkAvailable(this@MainActivity)) {
                                 dialog.dismiss()
                                 searchView.setQuery(viewModel.param, true)
                             }
@@ -126,7 +147,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GithubUserViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(GithubUserViewModel::class.java)
         viewModel.getData().observe(this, Observer {
             progressLoading.visibility = View.GONE
             if (it.isNotEmpty()) {
@@ -159,11 +183,54 @@ class MainActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
+        githubUserAdapter.onFavButtonClicked = { item, _ ->
+            item.isFavorite = if (item.isFavorite == 1) 0 else 1
+            val values = ContentValues().apply {
+                put(DatabaseContract.GithubUserColumns.USER_NAME, item.username)
+                put(DatabaseContract.GithubUserColumns.FULL_NAME, item.name)
+                put(DatabaseContract.GithubUserColumns.COMPANY, item.company)
+                put(DatabaseContract.GithubUserColumns.FOLLOWER, item.isFavorite)
+                put(DatabaseContract.GithubUserColumns.REPOSITORY, item.repository)
+                put(DatabaseContract.GithubUserColumns.IS_FAVORITE, item.isFavorite)
+            }
+            val result = if (item.isFavorite == 1) {
+                githubUserFavoriteHelper.insert(values)
+            } else {
+                githubUserFavoriteHelper.deleteByUserName(item.username).toLong()
+            }
+
+            if (result > 0) {
+                Snackbar.make(containerMain, "Sukses menambahkan favorite", Snackbar.LENGTH_SHORT)
+                    .show()
+            } else {
+                Snackbar.make(containerMain, "Gagal menambahkan favorite", Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+            log("ASD", item.toString())
+        }
         githubUserResultAdapter.onItemClickListener = { item, _ ->
             val intent = Intent(this, DetailUserActivity::class.java).apply {
                 putExtra(Extra.DATA, item.login)
             }
             startActivity(intent)
+        }
+    }
+
+    private fun loadData() {
+        GlobalScope.launch(Dispatchers.Main) {
+            val defferedNotes = async(Dispatchers.IO) {
+                val cursor = githubUserFavoriteHelper.queryAll()
+                MappingHelper.mapCursorToArrayList(cursor)
+            }
+            val notes = defferedNotes.await()
+            if (notes.isNotEmpty()) {
+                githubUserAdapter.itemsFavorite.addAll(notes)
+                log("ASD", notes.toString())
+            } else {
+                Snackbar.make(containerMain, "Tidak ada data favorite", Snackbar.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 }

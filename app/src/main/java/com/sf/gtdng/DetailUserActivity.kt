@@ -12,8 +12,8 @@ import com.sf.gtdng.fragment.DialogNoConnection
 import com.sf.gtdng.fragment.FollowerFragment
 import com.sf.gtdng.fragment.FollowingFragment
 import com.sf.gtdng.network.NetworkChecking
-import com.sf.gtdng.utils.Extra
-import com.sf.gtdng.utils.loadUrl
+import com.sf.gtdng.helper.Extra
+import com.sf.gtdng.helper.loadUrl
 import com.sf.gtdng.viewModel.GithubUserViewModel
 import kotlinx.android.synthetic.main.activity_user_detail.*
 import kotlinx.android.synthetic.main.layout_shimmer_user_detail.*
@@ -96,6 +96,8 @@ class DetailUserActivity : AppCompatActivity() {
         //check connection is available or not
         if (NetworkChecking.isNetworkAvailable(this)) {
             viewModel.getUserDetail()
+            viewModel.getUserFollower()
+            viewModel.getUserFollowing()
         } else {
             val dialog = DialogNoConnection()
             dialog.onButtonClickListener = {

@@ -7,7 +7,7 @@ import com.sf.gtdng.network.Api
 import com.sf.gtdng.network.ApiService
 import com.sf.gtdng.network.datasource.ApiEndPoint
 import com.sf.gtdng.network.response.*
-import com.sf.gtdng.utils.log
+import com.sf.gtdng.helper.log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/marginS"
-        android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
         android:elevation="5dp"
         android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -41,12 +41,26 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/user1" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="0dp"
+            <com.varunest.sparkbutton.SparkButton
+                android:id="@+id/buttonFav"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/containerListContent"
+                app:sparkbutton_activeImage="@drawable/ic_favorite_red"
+                app:sparkbutton_iconSize="20dp"
+                app:sparkbutton_inActiveImage="@drawable/ic_love_red_outline"
+                app:sparkbutton_primaryColor="@color/colorPrimary"
+                app:sparkbutton_secondaryColor="@color/spark_secondary_color" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/containerListContent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/imageUser"
+                app:layout_constraintRight_toLeftOf="@id/buttonFav"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 

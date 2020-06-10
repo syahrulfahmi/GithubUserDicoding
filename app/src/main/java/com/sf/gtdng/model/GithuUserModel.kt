@@ -26,5 +26,6 @@ data class User(
     @SerializedName("repository")
     val repository: Int,
     @SerializedName("username")
-    val username: String
+    val username: String,
+    var isFavorite: Int = 0
 ): Parcelable

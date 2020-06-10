@@ -1,4 +1,4 @@
-package com.sf.gtdng.utils
+package com.sf.gtdng.helper
 
 import com.sf.gtdng.BuildConfig
 

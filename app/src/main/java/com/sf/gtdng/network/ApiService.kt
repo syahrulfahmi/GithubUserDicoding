@@ -1,6 +1,6 @@
 package com.sf.gtdng.network
 
-import com.sf.gtdng.utils.AppLog
+import com.sf.gtdng.helper.AppLog
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

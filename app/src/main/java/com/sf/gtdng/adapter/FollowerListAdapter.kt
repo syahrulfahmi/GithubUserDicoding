@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sf.gtdng.R
 import com.sf.gtdng.network.response.FollowingAndFollowerListItem
-import com.sf.gtdng.utils.loadUrl
+import com.sf.gtdng.helper.loadUrl
 import kotlinx.android.synthetic.main.item_github_user_search.view.*
 
 /**

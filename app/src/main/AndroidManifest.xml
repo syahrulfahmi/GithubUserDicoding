@@ -26,6 +26,9 @@
         <activity
             android:name=".DetailUserActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FavoriteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

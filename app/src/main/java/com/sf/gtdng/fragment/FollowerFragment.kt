@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sf.gtdng.DetailUserActivity
 import com.sf.gtdng.R
 import com.sf.gtdng.adapter.FollowerListAdapter
-import com.sf.gtdng.utils.Extra
+import com.sf.gtdng.helper.Extra
 import com.sf.gtdng.viewModel.GithubUserViewModel
 import kotlinx.android.synthetic.main.fragment_list_follower.*
 import kotlinx.android.synthetic.main.fragment_list_follower.progressLoading

@@ -1,4 +1,4 @@
-package com.sf.gtdng.utils
+package com.sf.gtdng.helper
 
 import java.io.IOException
 import java.io.InputStream
