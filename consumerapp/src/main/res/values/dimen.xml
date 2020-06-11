@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="paddingXS">4dp</dimen>
+    <dimen name="paddingS">8dp</dimen>
+    <dimen name="paddingSSM">10dp</dimen>
+    <dimen name="paddingSM">12dp</dimen>
+    <dimen name="paddingM">16dp</dimen>
+    <dimen name="paddingM2">20dp</dimen>
+    <dimen name="paddingL">24dp</dimen>
+    <dimen name="paddingXL">36dp</dimen>
+    <dimen name="paddingXXL">48dp</dimen>
+
+    <dimen name="marginXXS">2dp</dimen>
+    <dimen name="marginXS">4dp</dimen>
+    <dimen name="marginS">8dp</dimen>
+    <dimen name="marginSM">12dp</dimen>
+    <dimen name="marginM">16dp</dimen>
+    <dimen name="marginML">20dp</dimen>
+    <dimen name="marginL">24dp</dimen>
+    <dimen name="marginXL">36dp</dimen>
+    <dimen name="marginXXL">48dp</dimen>
+    <dimen name="marginXXXL">60dp</dimen>
+
+    <dimen name="fontXXS">8sp</dimen>
+    <dimen name="fontXS">10sp</dimen>
+    <dimen name="fontS">12sp</dimen>
+    <dimen name="fontM">14sp</dimen>
+    <dimen name="fontL">16sp</dimen>
+    <dimen name="fontXL">18sp</dimen>
+    <dimen name="fontXXL">20sp</dimen>
+    <dimen name="fontXXXL">24sp</dimen>
+    <dimen name="fontX4L">28sp</dimen>
+    <dimen name="fontX5L">32sp</dimen>
+
+    <dimen name="sizeXXS">10dp</dimen>
+    <dimen name="sizeXS">20dp</dimen>
+    <dimen name="sizeS">30dp</dimen>
+    <dimen name="sizeM">40dp</dimen>
+    <dimen name="sizeM2">45dp</dimen>
+    <dimen name="sizeL">50dp</dimen>
+    <dimen name="sizeXL">60dp</dimen>
+    <dimen name="sizeXXL">70dp</dimen>
+    <dimen name="sizeXXXL">80dp</dimen>
+    <dimen name="sizeXXXXL">90dp</dimen>
+
+    <dimen name="spot_size">6dp</dimen>
+    <dimen name="progress_width">250dp</dimen>
+
+    <dimen name="otp_view_item_size">48dp</dimen>
+    <dimen name="otp_view_item_spacing">5dp</dimen>
+    <dimen name="otp_view_item_line_width">2dp</dimen>
+    <dimen name="otp_view_cursor_width">2dp</dimen>
+
+</resources>

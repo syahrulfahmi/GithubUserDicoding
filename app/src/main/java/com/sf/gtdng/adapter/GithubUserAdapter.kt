@@ -65,15 +65,17 @@ class GithubUserAdapter(var context: Context) :
             }
 
             val imageResource = context.resources.getIdentifier(item.avatar, null, context.packageName)
-            itemView.imageUser.setImageDrawable(context.getDrawable(imageResource))
-            itemView.textUser.text = item.name
-            itemView.textCompany.text = item.company
-            itemView.textFollower.text = (item.follower).toString()
-            itemView.textRepository.text = (item.repository).toString()
-            itemView.buttonFav.isChecked = item.isFavorite == 1
+            with(itemView) {
+                imageUser.setImageDrawable(context.getDrawable(imageResource))
+                textUser.text = item.name
+                textCompany.text = item.company
+                textFollower.text = (item.follower).toString()
+                textRepository.text = (item.repository).toString()
+                itemView.buttonFav.isChecked = item.isFavorite == 1
 
-            itemView.cvGithubItemUser.setOnClickListener {
-                onItemClickListener(item, adapterPosition)
+                cvGithubItemUser.setOnClickListener {
+                    onItemClickListener(item, adapterPosition)
+                }
             }
         }
     }

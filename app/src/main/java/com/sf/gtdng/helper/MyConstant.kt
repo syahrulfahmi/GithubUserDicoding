@@ -10,4 +10,5 @@ object AppLog {
 
 object Extra {
     const val DATA = "extra_data"
+    const val FAVORITE = 909
 }

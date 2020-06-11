@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shimmerUserDetail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:visibility="gone">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+
+        <View
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/marginM"
+            android:background="@drawable/circle_grey"
+            app:layout_constraintBottom_toTopOf="@id/textFullNameShimmer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:src="@drawable/user1" />
+
+        <View
+            android:id="@+id/textFullNameShimmer"
+            android:layout_width="100dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="@dimen/marginL"
+            android:layout_marginBottom="@dimen/marginM"
+            android:background="@color/colorGrey"
+            app:layout_constraintBottom_toTopOf="@id/container"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginM"
+            app:layout_constraintBottom_toTopOf="@id/spacer">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginS"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorGrey"
+                    android:padding="@dimen/paddingSM" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="@dimen/marginS"
+                    android:background="@color/colorGrey"
+                    android:gravity="center"
+                    android:text="@string/detail_user_repository"
+                    android:textColor="@color/colorBlack" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginS"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorGrey"
+                    android:padding="@dimen/paddingSM" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="@dimen/marginS"
+                    android:background="@color/colorGrey"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlack" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginS"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorGrey"
+                    android:padding="@dimen/paddingSM" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="@dimen/marginS"
+                    android:background="@color/colorGrey"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlack" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

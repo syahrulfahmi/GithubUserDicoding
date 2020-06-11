@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">Consumer App</string>
+
+    <string name="main_search_not_found">Keyword yang anda cari tidak ditemukan</string>
+    <string name="main_favorite_delete_success">Sukses menghapus favorite</string>
+    <string name="main_favorite_add_success">Sukses menambahkan favorite</string>
+    <string name="main_favorite_failure_add">Gagal menambahkan favorite</string>
+    <string name="main_favorite_failure_delete">Gagal menghapus favorite</string>
+
+    <string name="detail_personal">Personal</string>
+    <string name="detail_user_statistic">User Statistic</string>
+    <string name="detail_user_following">Mengikuti</string>
+    <string name="detail_user_follower">Pengikut</string>
+    <string name="detail_user_repository">Repositori</string>
+    <string name="detail_user_company_not_found">Tidak ada perusahaan</string>
+
+    <string name="search">Search</string>
+    <string name="search_hint">Masukan username</string>
+
+    <string name="detail_user_empty_follower">User belum memiliki Pengikut</string>
+    <string name="detail_user_empty_following">User belum pernah Mengikuti</string>
+
+    <string name="alert_no_network">Kamu tidak terhubung dengan Internet. Coba periksa kembali koneksimu</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="favorite">favorite</string>
+    <string name="setting">setting</string>
+
+
+    <string name="one_time_alarm">One Time Alarm</string>
+    <string name="alarm_date">Tanggal Alarm</string>
+    <string name="set_one_time_alarm">Set One Time Alarm</string>
+    <string name="alarm_message">Pesan Alarm</string>
+    <string name="repeating_alarm">Repeating Alarm</string>
+    <string name="set_repeating_alarm">Set Repeating Alarm</string>
+    <string name="cancel_alarm">Batalkan Alarm</string>
+    <string name="alarm_time">Waktu Alarm</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
