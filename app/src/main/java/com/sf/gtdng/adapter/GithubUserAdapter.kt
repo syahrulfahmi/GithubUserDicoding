@@ -19,6 +19,7 @@ class GithubUserAdapter(var context: Context) :
     var onItemClickListener: (item: User, position: Int) -> Unit = { _, _ -> }
     var onFavButtonClicked: (item: User, position: Int) -> Unit = { _, _ -> }
     var itemsFavorite = ArrayList<GithubUserField>()
+    var itemsFavoriteTemporary = ArrayList<GithubUserField>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater

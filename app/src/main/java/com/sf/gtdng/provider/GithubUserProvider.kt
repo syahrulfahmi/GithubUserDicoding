@@ -14,30 +14,17 @@ import com.sf.gtdng.db.GithubUserFavoriteHelper
 class GithubUserProvider : ContentProvider() {
 
     companion object {
-
-        /*
-        Integer digunakan sebagai identifier antara select all sama select by id
-         */
-        private const val NOTE = 1
-        private const val NOTE_ID = 2
+        private const val GITHUB_FAVORITE = 1
+        private const val GITHUB_FAVORITE_ID = 2
         private lateinit var noteHelper: GithubUserFavoriteHelper
+        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
-        private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
-
-        /*
-        Uri matcher untuk mempermudah identifier dengan menggunakan integer
-        misal
-        uri com.dicoding.picodiploma.mynotesapp dicocokan dengan integer 1
-        uri com.dicoding.picodiploma.mynotesapp/# dicocokan dengan integer 2
-         */
         init {
-            // content://com.dicoding.picodiploma.mynotesapp/note
-            sUriMatcher.addURI(AUTHORITY, TABLE_NAME, NOTE)
+            uriMatcher.addURI(AUTHORITY, TABLE_NAME, GITHUB_FAVORITE)
 
-            // content://com.dicoding.picodiploma.mynotesapp/note/id
-            sUriMatcher.addURI(AUTHORITY,
+            uriMatcher.addURI(AUTHORITY,
                 "$TABLE_NAME/#",
-                NOTE_ID)
+                GITHUB_FAVORITE_ID)
         }
     }
 
@@ -47,14 +34,12 @@ class GithubUserProvider : ContentProvider() {
         return true
     }
 
-    /*
-    Method queryAll digunakan ketika ingin menjalankan queryAll Select
-    Return cursor
-     */
+    /* Method queryAll digunakan ketika ingin menjalankan queryAll Select
+    yang akan mengembalikan keluaran cursor */
     override fun query(uri: Uri, strings: Array<String>?, s: String?, strings1: Array<String>?, s1: String?): Cursor? {
-        return when (sUriMatcher.match(uri)) {
-            NOTE -> noteHelper.queryAll()
-            NOTE_ID -> noteHelper.queryById(uri.lastPathSegment.toString())
+        return when (uriMatcher.match(uri)) {
+            GITHUB_FAVORITE -> noteHelper.queryAll()
+            GITHUB_FAVORITE_ID -> noteHelper.queryById(uri.lastPathSegment.toString())
             else -> null
         }
     }
@@ -64,10 +49,9 @@ class GithubUserProvider : ContentProvider() {
         return null
     }
 
-
     override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
-        val added: Long = when (NOTE) {
-            sUriMatcher.match(uri) -> noteHelper.insert(contentValues)
+        val added: Long = when (GITHUB_FAVORITE) {
+            uriMatcher.match(uri) -> noteHelper.insert(contentValues)
             else -> 0
         }
         context?.contentResolver?.notifyChange(CONTENT_URI, null)
@@ -75,18 +59,13 @@ class GithubUserProvider : ContentProvider() {
         return Uri.parse("$CONTENT_URI/$added")
     }
 
-    override fun update(
-        uri: Uri,
-        values: ContentValues?,
-        selection: String?,
-        selectionArgs: Array<out String>?
-    ): Int {
+    override fun update(uri: Uri,values: ContentValues?,selection: String?,selectionArgs: Array<out String>?): Int {
         TODO("Not yet implemented")
     }
 
     override fun delete(uri: Uri, s: String?, strings: Array<String>?): Int {
-        val deleted: Int = when (NOTE_ID) {
-            sUriMatcher.match(uri) -> noteHelper.deleteByUserName(uri.lastPathSegment.toString())
+        val deleted: Int = when (GITHUB_FAVORITE_ID) {
+            uriMatcher.match(uri) -> noteHelper.deleteByUserName(uri.lastPathSegment.toString())
             else -> 0
         }
 

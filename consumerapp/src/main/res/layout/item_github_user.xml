@@ -21,37 +21,28 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="7dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:background="@color/colorPrimary" />
+            android:scaleType="centerCrop"
+            android:scaleX="-1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_triangle_left_primary" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:padding="@dimen/marginSM">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageUser"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:transitionName="image"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/user1" />
-
-            <com.varunest.sparkbutton.SparkButton
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/buttonFav"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="@dimen/marginM"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/containerListContent"
-                app:sparkbutton_activeImage="@drawable/ic_favorite_red"
-                app:sparkbutton_iconSize="20dp"
-                app:sparkbutton_inActiveImage="@drawable/ic_love_red_outline"
-                app:sparkbutton_primaryColor="@color/colorPrimary"
-                app:sparkbutton_secondaryColor="@color/spark_secondary_color" />
+                app:srcCompat="@drawable/ic_favorite_red"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/containerListContent"
@@ -59,7 +50,7 @@
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/imageUser"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/buttonFav"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

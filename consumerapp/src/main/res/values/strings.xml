@@ -17,8 +17,8 @@
     <string name="search">Search</string>
     <string name="search_hint">Masukan username</string>
 
-    <string name="detail_user_empty_follower">User belum memiliki Pengikut</string>
-    <string name="detail_user_empty_following">User belum pernah Mengikuti</string>
+    <string name="detail_user_empty_follower">User belum memiliki pengikut</string>
+    <string name="detail_user_empty_following">User belum pernah mengikuti</string>
 
     <string name="alert_no_network">Kamu tidak terhubung dengan Internet. Coba periksa kembali koneksimu</string>
     <string name="try_again">Coba Lagi</string>

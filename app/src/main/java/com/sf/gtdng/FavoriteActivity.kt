@@ -1,6 +1,7 @@
 package com.sf.gtdng
 
 import android.app.Activity
+import android.content.ContentValues
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -47,7 +48,16 @@ class FavoriteActivity : AppCompatActivity() {
             onBackPressed()
         }
         favoriteListAdapter.onUnFavButtonClicked = { item, _ ->
-            val result = githubUserFavoriteHelper.deleteByUserName(item.userName).toLong()
+            item.isFavorite = if (item.isFavorite == 1) 0 else 1
+            val values = ContentValues().apply {
+                put(DatabaseContract.GithubUserColumns.USER_NAME, item.userName)
+                put(DatabaseContract.GithubUserColumns.FULL_NAME, item.fullName)
+                put(DatabaseContract.GithubUserColumns.COMPANY, item.company)
+                put(DatabaseContract.GithubUserColumns.FOLLOWER, item.follower)
+                put(DatabaseContract.GithubUserColumns.REPOSITORY, item.repository)
+                put(DatabaseContract.GithubUserColumns.IS_FAVORITE, item.isFavorite)
+            }
+            val result = githubUserFavoriteHelper.update(item.userName,values).toLong()
 
             if (result > 0) {
                 Snackbar.make(containerFavorite,getString(R.string.main_favorite_delete_success),Snackbar.LENGTH_SHORT)
@@ -77,7 +87,12 @@ class FavoriteActivity : AppCompatActivity() {
             }
             val favoriteItems = defferedFavorite.await()
             if (favoriteItems.isNotEmpty()) {
-                favoriteListAdapter.addAll(favoriteItems)
+                favoriteListAdapter.items.clear()
+                for (i in favoriteItems) {
+                    if (i.isFavorite == 1) {
+                        favoriteListAdapter.add(i)
+                    }
+                }
             } else {
                 textInfo.visibility = View.VISIBLE
             }

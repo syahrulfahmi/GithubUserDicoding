@@ -69,6 +69,10 @@ class GithubUserFavoriteHelper(context: Context) {
         return database.insert(DATABASE_TABLE, null, values)
     }
 
+    fun update(userName: String, values: ContentValues?): Int {
+        return database.update(DATABASE_TABLE, values, "$USER_NAME = ?", arrayOf(userName))
+    }
+
     fun deleteByUserName(userName: String): Int {
         return database.delete(DATABASE_TABLE, "$USER_NAME = '$userName'", null)
     }

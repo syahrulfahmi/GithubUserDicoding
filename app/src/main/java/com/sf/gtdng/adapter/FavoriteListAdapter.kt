@@ -38,9 +38,11 @@ class FavoriteListAdapter(var context: Context) :
         return items.size
     }
 
-    fun addAll(data: List<GithubUserField>) {
-        items = ArrayList(data)
-        notifyDataSetChanged()
+    fun add(data: GithubUserField) {
+        items.add(data)
+        val position = items.indexOf(data)
+        notifyItemChanged(position)
+        notifyItemRangeChanged(position, itemCount)
     }
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,8 +52,6 @@ class FavoriteListAdapter(var context: Context) :
         fun bind(position: Int) {
             item = items[position]
 
-//            val imageResource = context.resources.getIdentifier(item.avatar, null, context.packageName)
-//            itemView.imageUser.setImageDrawable(context.getDrawable(imageResource))
             itemView.textUser.text = item.fullName
             itemView.textCompany.text = item.company
             itemView.textFollower.text = (item.follower).toString()

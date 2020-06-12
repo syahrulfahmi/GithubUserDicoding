@@ -18,11 +18,11 @@
         android:theme="@style/AppTheme.Fullscreen">
         <provider
             android:name=".provider.GithubUserProvider"
-            android:authorities="com.sf.gtndg"
+            android:authorities="com.sf.gtdng"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="com.dicoding.mynotesapp.READ_DATABASE"
-            android:writePermission="com.dicoding.mynotesapp.WRITE_DATABASE"/>
+            android:readPermission="com.sf.gtdng.READ_DATABASE"
+            android:writePermission="com.sf.gtdng.WRITE_DATABASE"/>
 
         <receiver
             android:name=".broadcast.AlarmReceiver"

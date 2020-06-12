@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var githubUserFavoriteHelper: GithubUserFavoriteHelper
 
     private var isChange = false
+    private var isFromFavorite = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,8 +92,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Extra.FAVORITE) {
+            isFromFavorite = false
             loadData()
-            githubUserAdapter.notifyDataSetChanged()
         }
     }
 
@@ -213,9 +214,9 @@ class MainActivity : AppCompatActivity() {
     private fun initListener() {
         githubUserAdapter.onItemClickListener = { item, _ ->
             val intent = Intent(this, DetailUserActivity::class.java).apply {
-                putExtra(Extra.DATA, item.username)
+                putExtra(Extra.DATA, item)
             }
-            startActivity(intent)
+            startActivityForResult(intent, Extra.FAVORITE)
         }
 
         githubUserAdapter.onFavButtonClicked = { item, _ ->
@@ -224,7 +225,7 @@ class MainActivity : AppCompatActivity() {
                 put(DatabaseContract.GithubUserColumns.USER_NAME, item.username)
                 put(DatabaseContract.GithubUserColumns.FULL_NAME, item.name)
                 put(DatabaseContract.GithubUserColumns.COMPANY, item.company)
-                put(DatabaseContract.GithubUserColumns.FOLLOWER, item.isFavorite)
+                put(DatabaseContract.GithubUserColumns.FOLLOWER, item.follower)
                 put(DatabaseContract.GithubUserColumns.REPOSITORY, item.repository)
                 put(DatabaseContract.GithubUserColumns.IS_FAVORITE, item.isFavorite)
             }
@@ -232,7 +233,7 @@ class MainActivity : AppCompatActivity() {
             val result = if (item.isFavorite == 1) {
                 githubUserFavoriteHelper.insert(values)
             } else {
-                githubUserFavoriteHelper.deleteByUserName(item.username).toLong()
+                githubUserFavoriteHelper.update(item.username, values).toLong()
             }
 
             if (result > 0) {
@@ -257,14 +258,17 @@ class MainActivity : AppCompatActivity() {
     private fun loadData() {
         GlobalScope.launch(Dispatchers.Main) {
             val defferedFavorite = async(Dispatchers.IO) {
-//                val cursor = githubUserFavoriteHelper.queryAll()
                 val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             val favoriteItems = defferedFavorite.await()
             if (favoriteItems.isNotEmpty()) {
+                githubUserAdapter.itemsFavorite.clear()
                 githubUserAdapter.itemsFavorite.addAll(favoriteItems)
                 githubUserAdapter.notifyDataSetChanged()
+                if (isFromFavorite) {
+                    githubUserAdapter.itemsFavoriteTemporary.addAll(favoriteItems)
+                }
             }
         }
     }

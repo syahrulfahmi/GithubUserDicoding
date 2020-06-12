@@ -2,7 +2,6 @@ package com.sf.gtdng.db
 
 import android.net.Uri
 import android.provider.BaseColumns
-import android.service.notification.Condition.SCHEME
 
 /**
  * بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
@@ -22,10 +21,9 @@ internal class DatabaseContract {
             const val REPOSITORY = "repository"
             const val IS_FAVORITE = "is_favorite"
 
-            const val AUTHORITY = "com.sf.gtndg"
+            const val AUTHORITY = "com.sf.gtdng"
             const val SCHEME = "content"
 
-            // untuk membuat URI content://com.sf.gtndg/githubUser
             val CONTENT_URI: Uri = Uri.Builder().scheme(SCHEME)
                 .authority(AUTHORITY)
                 .appendPath(TABLE_NAME)
